@@ -26,40 +26,9 @@
 
 $tabvalue = array(
     array(
-        'class_name' => 'AdminBlogCategory',
-        'id_parent' => 15,
-        'module' => 'smartblog',
-        'name' => 'Blog Category',
-    ),
-    array(
-        'class_name' => 'AdminBlogcomment',
-        'id_parent' => 15,
-        'module' => 'smartblog',
-        'name' => 'Blog Comments',
-    ),
-    array(
         'class_name' => 'AdminBlogPost',
         'id_parent' => 15,
-        'module' => 'smartblog',
+        'module' => 'blog',
         'name' => 'Blog Post',
-    ),
-    array(
-        'class_name' => 'AdminImageType',
-        'id_parent' => 15,
-        'module' => 'smartblog',
-        'name' => 'Image Type',
-    ),
-    array(
-        'class_name' => 'AdminAboutUs',
-        'id_parent' => 15,
-        'module' => 'smartblog',
-        'name' => 'AboutUs',
-    ),
-    array(
-        'class_name' => 'AdminSmartBlogAjax',
-        'id_parent' => -1,
-        'module' => 'smartblog',
-        'name' => 'SmartBlogAjax',
     )
 );
-?>
