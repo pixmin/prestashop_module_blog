@@ -61,21 +61,28 @@ class blog extends Module
 
         return true;
     }
-            
+
+    private function CreateBlogTabs()
+    {
+        $langs = Language::getLanguages();
+        $tab = new Tab();
+        $tab->class_name = "AdminBlogPost";
+        $tab->module = "blog";
+        $tab->id_parent = 0;
+        foreach ($langs as $l) {
+            $tab->name[$l['id_lang']] = $this->l('Blog');
+        }
+        $tab->save();
+        return true;
+    }
+
     public function uninstall()
     {
         if (!parent::uninstall())
             return false;
 
-        $idtabs = array();
+        $this->removeTabs();
 
-        require_once(dirname(__FILE__) . '/sql/uninstall_tab.php');
-        foreach ($idtabs as $tabid):
-            if ($tabid) {
-                $tab = new Tab($tabid);
-                $tab->delete();
-            }
-        endforeach;
         $sql = array();
         require_once(dirname(__FILE__) . '/sql/uninstall.php');
         foreach ($sql as $s) :
@@ -86,78 +93,13 @@ class blog extends Module
         return true;
     }
 
-
-    private function CreateBlogTabs()
+    public function removeTabs()
     {
-        $langs = Language::getLanguages();
-        $smarttab = new Tab();
-        $smarttab->class_name = "AdminBlog";
-        $smarttab->module = "";
-        $smarttab->id_parent = 0;
-        foreach ($langs as $l) {
-            $smarttab->name[$l['id_lang']] = $this->l('Blog');
+        $tabid = Tab::getIdFromClassName("AdminBlogPost");
+        if ($tabid) {
+            $tab = new Tab($tabid);
+            $tab->delete();
         }
-        $smarttab->save();
-        $tab_id = $smarttab->id;
-
-        $tabvalue = array();
-        // assign tab value from include file
-        require_once(dirname(__FILE__) . '/sql/install_tab.php');
-        foreach ($tabvalue as $tab) {
-            $newtab = new Tab();
-            $newtab->class_name = $tab['class_name'];
-            if($tab['id_parent']==-1)
-                    $newtab->id_parent = $tab['id_parent'];
-                else
-            $newtab->id_parent = $tab_id;
-
-            $newtab->module = $tab['module'];
-            foreach ($langs as $l) {
-                $newtab->name[$l['id_lang']] = $this->l($tab['name']);
-            }
-            $newtab->save();
-        }
-        return true;
-    }
-
-    public function hookModuleRoutes($params)
-    {
-        $alias = 'blog';
-        $usehtml = (int) Configuration::get('smartusehtml');
-        $html = '.html';
-
-        $my_link = array(
-            'blog' => array(
-                'controller' => 'category',
-                'rule' => 'blog.html',
-                'keywords' => array(),
-                'params' => array(
-                    'fc' => 'module',
-                    'module' => 'smartblog'
-                )
-            )
-        );
-
-        $smartblogurlpattern = (int) Configuration::get('smartblogurlpattern');
-
-        $my_link = array();
-
-        switch ($smartblogurlpattern) {
-
-            case 1:
-                $my_link = $this->urlPatterWithoutId($alias, $html);
-                break;
-            case 2:
-                $my_link = $this->urlPatterWithIdOne($alias, $html);
-                break; 
-
-            default:
-                $my_link = $this->urlPatterWithIdOne($alias, $html);
-        }
-        // echo "<pre>";
-        // print_r($my_link);
-
-        return $my_link;
     }
 
 }
