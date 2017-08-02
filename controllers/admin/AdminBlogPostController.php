@@ -1,9 +1,9 @@
 <?php
 
-class AdminBlogPostController extends ModuleAdminController {
-
-    public function __construct() {
-
+class AdminBlogPostController extends ModuleAdminController
+{
+    public function __construct()
+    {
         $this->table = 'blog_post';
         $this->className = 'BlogPost';
         $this->module = 'blog';
@@ -69,10 +69,10 @@ class AdminBlogPostController extends ModuleAdminController {
         parent::__construct();
     }
 
-    public function renderList() {
+    public function renderList()
+    {
         $this->addRowAction('edit');
         $this->addRowAction('delete');
         return parent::renderList();
     }
-
 }

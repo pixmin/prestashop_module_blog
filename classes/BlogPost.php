@@ -10,10 +10,18 @@ class BlogPost extends ObjectModel
         'table' => 'blog_post',
         'primary' => 'id_blog_post',
         'fields' => array(
-            'created' => array('type' => self::TYPE_DATE, 'validate' => 'isString'),
-            'title' => array('type' => self::TYPE_STRING, 'validate' => 'isString'),
-            'description' => array('type' => self::TYPE_STRING, 'validate' => 'isString')
+            'created' => array(
+                'type' => self::TYPE_DATE,
+                'validate' => 'isString'
+            ),
+            'title' => array(
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString'
+            ),
+            'description' => array(
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString'
+            ),
         ),
     );
-
 }
